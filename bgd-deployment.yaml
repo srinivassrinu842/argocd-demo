@@ -15,12 +15,15 @@ spec:
     metadata:
       labels:
         app: bgd
+      annotations:
+        # Add the hash of the ConfigMap content here
+        configmap-hash: "{{ .ConfigMap | sha256sum }}"
     spec:
       containers:
       - image: quay.io/rhdevelopers/bgd:1.0.0
         name: bgd
-        env:
-        - name: COLOR
-          value: "green"
+        envFrom:
+          - configMapRef:
+                name: my-configmap
         resources: {}
 ---
