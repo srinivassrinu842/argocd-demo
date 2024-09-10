@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  labels:
+    app: bgd
+  name: bgd
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: bgd
+  template:
+    metadata:
+      labels:
+        app: bgd
+    spec:
+      containers:
+      - image: quay.io/rhdevelopers/bgd:1.0.0
+        name: bgd
+        envFrom:
+        - configMapRef:
+            name: my-configmap
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - pause: { duration: 30s }
+      - setWeight: 100
+      - pause: { duration: 30s }
