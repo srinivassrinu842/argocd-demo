@@ -2,6 +2,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    configmap.reloader.stakater.com/reload: "my-configmap"
   labels:
     app: bgd
   name: bgd
@@ -15,9 +17,6 @@ spec:
     metadata:
       labels:
         app: bgd
-      annotations:
-        # Add the hash of the ConfigMap content here
-        configmap-hash: "{{ .ConfigMap | sha256sum }}"
     spec:
       containers:
       - image: quay.io/rhdevelopers/bgd:1.0.0
