@@ -5,4 +5,4 @@ metadata:
   labels:
     stakater/reloader: enabled
 data:
-  COLOR: green
+  COLOR: blue
